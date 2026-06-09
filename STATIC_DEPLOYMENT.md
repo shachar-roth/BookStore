@@ -36,19 +36,40 @@ Only public pages are exported. Admin pages are not included.
 
 During export, the app starts locally on a temporary port, requests the public pages, rewrites public links to static paths, and saves those responses into `dist`.
 
-## Deploy
+## Deploy with GitHub Actions
 
-Upload the contents of `dist` to a static host such as Cloudflare Pages, Netlify, GitHub Pages, or Azure Static Web Apps.
+The production site is deployed as a Cloudflare Worker with static assets named `bookstore`.
 
-## Order form on Cloudflare Pages
+The GitHub Actions workflow in `.github/workflows/deploy.yml` runs on every push to `main`:
 
-The order page is static, but order submission uses a Cloudflare Pages Function:
+1. restore and build the .NET project
+2. run `export-static`
+3. deploy `dist` to Cloudflare with Wrangler
+
+Configure these GitHub repository secrets:
 
 ```text
-functions/api/order.js
+CLOUDFLARE_API_TOKEN=Cloudflare API token with Workers Scripts edit permission
+CLOUDFLARE_ACCOUNT_ID=Cloudflare account ID
 ```
 
-Configure these Cloudflare Pages environment variables:
+The Worker deployment config is in `wrangler.jsonc`.
+
+## Order API Worker
+
+The order page is static, but order submission uses a separate Cloudflare Worker:
+
+```text
+api/ein-hamelech-orders.js
+```
+
+The current Cloudflare route is:
+
+```text
+ein-hamelech.shakedshira.com/api/order
+```
+
+Configure these Cloudflare Worker variables/secrets:
 
 ```text
 RESEND_API_KEY=your Resend API key
@@ -56,7 +77,7 @@ ORDER_EMAIL_TO=the mailbox that should receive new orders
 ORDER_EMAIL_FROM=verified sender address in Resend
 ```
 
-For this to work, deploy through a Cloudflare Pages project that includes the repository's `functions` directory and uses `dist` as the build output directory. A direct static upload of only the files inside `dist` will not include the `/api/order` function.
+The static-site workflow deploys only the `bookstore` Worker. Deploy `api/ein-hamelech-orders.js` separately when the order email Worker changes.
 
 The exported site includes:
 
