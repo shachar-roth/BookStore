@@ -1,0 +1,48 @@
+@page "/OrderThanks"
+@{
+    ViewData["Title"] = "ההזמנה התקבלה";
+}
+
+<section class="simple-page order-thanks-page">
+    <span class="section-tag">תודה</span>
+    <h1>ההזמנה התקבלה</h1>
+    <p>
+        מספר ההזמנה שלך:
+        <strong data-order-reference>יופיע כאן לאחר שליחת הטופס</strong>
+    </p>
+    <p class="order-payment-summary" data-order-payment-summary></p>
+
+    <div class="payment-instructions">
+        <h2>תשלום מהיר בביט או בפייבוקס</h2>
+        <p>
+            סרקו את הקוד או פתחו את הקישור לתשלום. חשוב לכתוב בהערת התשלום את מספר ההזמנה:
+            <strong data-order-reference-inline>EM-TEST</strong>
+        </p>
+
+        <div class="payment-options">
+            <article class="payment-option-card">
+                <h3>Bit</h3>
+                <img class="payment-qr-image" src="~/media/payments/bit-qr.svg" alt="קוד QR לתשלום בביט" />
+                <a class="btn btn-accent payment-link-button" href="https://www.bitpay.co.il/app/me/A0A2EF72-CF31-D7A8-2224-5CC8A66DA1E70462" target="_blank" rel="noopener">
+                    פתיחת תשלום בביט
+                </a>
+            </article>
+
+            <article class="payment-option-card">
+                <h3>PayBox</h3>
+                <img class="payment-qr-image" src="~/media/payments/paybox-qr.svg" alt="קוד QR לתשלום בפייבוקס" />
+                <a class="btn btn-accent payment-link-button" href="https://links.payboxapp.com/kauQQVM9E3b" target="_blank" rel="noopener">
+                    פתיחת תשלום בפייבוקס
+                </a>
+            </article>
+        </div>
+
+        <p class="payment-phone-note">
+            אפשר גם לשלם ידנית למספר <strong>0548020189</strong>.
+        </p>
+    </div>
+
+    <p>
+        לאחר שהתשלום יתקבל, נטפל בהזמנה וניצור קשר במידת הצורך.
+    </p>
+</section>

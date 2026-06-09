@@ -1,0 +1,34 @@
+@page "/Admin"
+@model BookBoutique.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "אדמין";
+}
+
+<section class="admin-shell">
+    <div class="admin-toolbar">
+        <div>
+            <span class="section-tag">אזור ניהול מקומי</span>
+            <h1>תוכן האתר</h1>
+        </div>
+    </div>
+
+    <section class="admin-menu-grid">
+        <a class="admin-menu-card" asp-page="/Admin/BonusContent">
+            <span class="section-tag">בלעדי</span>
+            <h2>פרקים שאפשר לקרוא רק באתר</h2>
+            <p>הוספה, עריכה ומחיקה של קטעי בונוס.</p>
+        </a>
+
+        <a class="admin-menu-card" asp-page="/Admin/Podcasts">
+            <span class="section-tag">אודיו</span>
+            <h2>פודקסטים</h2>
+            <p>העלאת קבצי אודיו ומתן כותרות לפרקים.</p>
+        </a>
+
+        <a class="admin-menu-card" asp-page="/Admin/Gallery">
+            <span class="section-tag">עולם עין המלך</span>
+            <h2>ניהול TheWorld</h2>
+            <p>העלאת תמונות, כותרות ותיאור שיופיעו בעמוד עולם עין המלך.</p>
+        </a>
+    </section>
+</section>

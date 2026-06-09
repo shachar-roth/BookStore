@@ -1,0 +1,46 @@
+@page "/Order"
+@{
+    ViewData["Title"] = "אפשרויות הזמנה";
+}
+
+<section class="simple-page order-page order-options-page">
+    <span class="section-tag">הזמנה</span>
+    <h1>איך תרצו לקבל את הספר?</h1>
+    <p>
+        בחרו את סוג הספר ואת דרך הקבלה. בעמוד הבא נשמור את פרטי ההזמנה ונעביר אתכם להוראות תשלום.
+    </p>
+
+    <div class="order-options-grid">
+        <article class="order-option-card">
+            <div>
+                <span class="section-tag">ספר מודפס</span>
+                <h2>ספר פיזי</h2>
+                <p class="order-price">60 ש"ח</p>
+                <p>עותק מודפס של <strong>הנערה בנקבה</strong>.</p>
+            </div>
+
+            <div class="order-suboptions">
+                <a class="order-suboption" asp-page="/OrderDetails" asp-route-bookType="physical" asp-route-deliveryMethod="israel-mail">
+                    <strong>דואר ישראל</strong>
+                    <span>משלוח חינם</span>
+                </a>
+
+                <a class="order-suboption" asp-page="/OrderDetails" asp-route-bookType="physical" asp-route-deliveryMethod="home-delivery">
+                    <strong>משלוח עד הבית</strong>
+                    <span>בתוספת עלות משלוח, תתואם בהמשך</span>
+                </a>
+            </div>
+        </article>
+
+        <article class="order-option-card order-option-card-digital">
+            <div>
+                <span class="section-tag">קובץ דיגיטלי</span>
+                <h2>ספר דיגיטלי</h2>
+                <p class="order-price">27 ש"ח</p>
+                <p>קובץ דיגיטלי לקריאה, במחיר נמוך יותר מהספר המודפס.</p>
+            </div>
+
+            <a class="btn btn-accent" asp-page="/OrderDetails" asp-route-bookType="digital">המשך להזמנה דיגיטלית</a>
+        </article>
+    </div>
+</section>

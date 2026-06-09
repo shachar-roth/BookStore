@@ -1,0 +1,96 @@
+@page
+@model BookBoutique.Pages.Admin.PodcastsModel
+@{
+    ViewData["Title"] = "ניהול פודקסטים";
+}
+
+<section class="admin-shell">
+    <div class="admin-toolbar">
+        <div>
+            <span class="section-tag">ניהול</span>
+            <h1>פודקסט על הספר</h1>
+        </div>
+        <div class="admin-actions">
+            <a class="btn btn-secondary-outline" asp-page="/Admin/Index">חזרה לאדמין</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+    {
+        <section class="confirmation-banner" aria-live="polite">
+            <strong>@Model.StatusMessage</strong>
+        </section>
+    }
+
+    <section class="admin-grid">
+        <section class="simple-page admin-editor">
+            <span class="section-tag">עריכה</span>
+            <h2>@(Model.Editor.Id == Guid.Empty ? "פודקסט חדש" : "עריכת פודקסט")</h2>
+
+            <form method="post" asp-page-handler="Save" class="admin-form" enctype="multipart/form-data">
+                <input asp-for="Editor.Id" type="hidden" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <label>
+                    כותרת
+                    <input asp-for="Editor.Title" class="form-control" />
+                    <span asp-validation-for="Editor.Title" class="text-danger"></span>
+                </label>
+
+                <label>
+                    קובץ אודיו
+                    <input asp-for="Editor.AudioFile" class="form-control" type="file" accept=".mp3,.m4a,.wav,.mp4,.aac,audio/*" />
+                    <span asp-validation-for="Editor.AudioFile" class="text-danger"></span>
+                </label>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Editor.ExistingFileName))
+                {
+                    <p class="admin-file-hint">הקובץ הנוכחי: @Model.Editor.ExistingFileName</p>
+                }
+
+                <label class="checkbox-row">
+                    <input asp-for="Editor.IsPublished" />
+                    לפרסם את הפודקסט באתר
+                </label>
+
+                <div class="admin-actions">
+                    <button type="submit" class="btn btn-accent">שמירה</button>
+                    <a class="btn btn-secondary-outline" asp-page="/Admin/Podcasts">פודקסט חדש</a>
+                </div>
+            </form>
+        </section>
+
+        <section class="simple-page admin-list">
+            <span class="section-tag">פודקסטים קיימים</span>
+            <h2>מה כבר מופיע במערכת</h2>
+
+            @foreach (var item in Model.Items)
+            {
+                <article class="admin-item">
+                    <div>
+                        <h3>@item.Title</h3>
+                        <p>@item.OriginalFileName</p>
+                        <div class="admin-meta">
+                            <span>@(item.IsPublished ? "מפורסם" : "טיוטה")</span>
+                            <span>@item.UpdatedAtUtc.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</span>
+                        </div>
+                    </div>
+                    <div class="admin-item-actions">
+                        <form method="post" asp-page-handler="Edit">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-secondary-outline">עריכה</button>
+                        </form>
+                        <form method="post" asp-page-handler="Delete" onsubmit="return confirm('למחוק את הפודקסט הזה?');">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-danger-soft">מחיקה</button>
+                        </form>
+                    </div>
+                </article>
+            }
+        </section>
+    </section>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

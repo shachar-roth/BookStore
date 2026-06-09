@@ -1,0 +1,28 @@
+@page "/Bonus/Chapter/{slug}"
+@model BookBoutique.Pages.BonusChapterModel
+@{
+    ViewData["Title"] = Model.Item?.Title ?? "פרק בלעדי";
+}
+
+@if (Model.Item is null)
+{
+    <section class="simple-page">
+        <span class="section-tag">לא נמצא</span>
+        <h1>הפרק לא נמצא</h1>
+        <p>יכול להיות שהפרק נמחק או שעדיין לא פורסם.</p>
+        <a class="btn btn-secondary-outline" asp-page="/Bonus">חזרה לכל הפרקים</a>
+    </section>
+}
+else
+{
+    <section class="bonus-chapter-reader">
+        @if (!string.IsNullOrWhiteSpace(Model.Item.PdfFileName))
+        {
+            <partial name="_PdfBookViewer" model="Model.BookViewer" />
+        }
+        else
+        {
+            <p class="bonus-summary">עדיין לא הועלה קובץ PDF לפרק הזה.</p>
+        }
+    </section>
+}

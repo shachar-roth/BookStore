@@ -1,0 +1,31 @@
+# Build output
+bin/
+obj/
+/dist/
+
+# Local IDE/user settings
+*.user
+*.suo
+.vs/
+.vscode/
+.idea/
+
+# Local logs and generated archives
+*.log
+*.zip
+
+# Local runtime/customer data
+App_Data/preorders.jsonl
+
+# Local environment/secrets files
+.env
+.env.*
+*.pfx
+*.pem
+*.key
+*.publishsettings
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store

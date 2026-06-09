@@ -1,0 +1,38 @@
+@page
+@model BookBoutique.Pages.BonusModel
+@{
+    ViewData["Title"] = "פרקים שאפשר לקרוא רק באתר";
+}
+
+<section class="simple-page bonus-hero">
+    <span class="section-tag">תוכן בלעדי</span>
+    <h1>פרקים שאפשר לקרוא רק באתר</h1>
+    <p>
+        כאן מחכים קטעים מיוחדים מתוך <strong>עין המלך</strong>: סצנות שנערכו החוצה, פרקי בונוס,
+        ורגעים נוספים שנשמרו במיוחד לקוראות ולקוראים של האתר.
+    </p>
+</section>
+
+<section class="bonus-list">
+    @foreach (var item in Model.Items)
+    {
+        <article class="bonus-card">
+            <span class="section-tag">קטע בלעדי</span>
+            <h2>@item.Title</h2>
+            @if (!string.IsNullOrWhiteSpace(item.Summary))
+            {
+                <p class="bonus-summary">@item.Summary</p>
+            }
+            @if (!string.IsNullOrWhiteSpace(item.PdfFileName))
+            {
+                <div class="bonus-actions">
+                    <a class="btn btn-accent" asp-page="/BonusChapter" asp-route-slug="@BonusChapterModel.CreateSlug(item)">קריאה באתר</a>
+                </div>
+            }
+            else
+            {
+                <p class="bonus-summary">עדיין לא הועלה קובץ PDF לפרק הזה.</p>
+            }
+        </article>
+    }
+</section>

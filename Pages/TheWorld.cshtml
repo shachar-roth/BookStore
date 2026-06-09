@@ -1,0 +1,42 @@
+@page "/TheWorld"
+@model BookBoutique.Pages.TheWorldModel
+@{
+    ViewData["Title"] = "עולם עין המלך";
+}
+
+<section class="simple-page world-page-intro">
+    <span class="section-tag">עולם עין המלך</span>
+    <h1>עוד על העולם</h1>
+    <p>תמונות, דמויות ורגעים מתוך העולם של עין המלך.</p>
+</section>
+
+@if (Model.Items.Count == 0)
+{
+    <section class="simple-page">
+        <span class="section-tag">בקרוב</span>
+        <p>עדיין לא נוספו תמונות לעולם עין המלך.</p>
+    </section>
+}
+else
+{
+    <section class="character-grid world-gallery-grid">
+        @foreach (var item in Model.Items)
+        {
+            <article class="character-card">
+                @if (!string.IsNullOrWhiteSpace(item.FileName))
+                {
+                    <div class="character-portrait character-photo">
+                        <img src="@item.PublicUrl" alt="@item.Title" loading="lazy" />
+                    </div>
+                }
+                <div class="character-content">
+                    <h2>@item.Title</h2>
+                    @if (!string.IsNullOrWhiteSpace(item.Details))
+                    {
+                        <p>@item.Details</p>
+                    }
+                </div>
+            </article>
+        }
+    </section>
+}

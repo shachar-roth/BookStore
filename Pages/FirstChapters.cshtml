@@ -1,0 +1,9 @@
+@page "/FirstChapters"
+@model BookBoutique.Pages.FirstChaptersModel
+@{
+    ViewData["Title"] = "ששת הפרקים הראשונים";
+}
+
+<section class="bonus-chapter-reader">
+    <partial name="_PdfBookViewer" model="Model.BookViewer" />
+</section>

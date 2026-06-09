@@ -1,0 +1,102 @@
+@using System.Text.Json
+@model BookBoutique.Models.PdfBookViewerModel
+
+@if (Model.PageImageUrls.Count > 0)
+{
+    <section class="pdf-book-viewer" data-page-urls="@JsonSerializer.Serialize(Model.PageImageUrls)" dir="rtl">
+        <button class="pdf-turn-zone pdf-turn-next" type="button" data-pdf-next aria-label="לעמודים הבאים"></button>
+        <button class="pdf-turn-zone pdf-turn-previous" type="button" data-pdf-previous aria-label="לעמודים הקודמים"></button>
+        <div class="pdf-toolbar" aria-live="polite">
+            <span class="pdf-page-number pdf-page-number-right" data-pdf-page-number-right>1</span>
+            <button class="btn btn-secondary-outline" type="button" data-pdf-previous>העמודים הקודמים</button>
+            <button class="btn btn-secondary-outline" type="button" data-pdf-next>העמודים הבאים</button>
+            <span class="pdf-page-number pdf-page-number-left" data-pdf-page-number-left>2</span>
+        </div>
+        <div class="pdf-page-shell">
+            <div class="pdf-page-spread">
+                <figure class="pdf-page-slot pdf-page-right">
+                    <img class="pdf-page-image" data-pdf-page-right src="@Model.PageImageUrls[0]" alt="עמוד 1" />
+                </figure>
+                <figure class="pdf-page-slot pdf-page-left">
+                    <img class="pdf-page-image" data-pdf-page-left alt="עמוד 2" />
+                </figure>
+            </div>
+        </div>
+        <p class="pdf-fallback">
+            אפשר גם לפתוח את הקובץ המקורי:
+            <a href="@Model.PdfUrl">פתיחת PDF</a>
+        </p>
+    </section>
+
+    <script>
+        (() => {
+            const viewer = document.querySelector('[data-page-urls]');
+            const pages = JSON.parse(viewer.dataset.pageUrls);
+            const rightPage = viewer.querySelector('[data-pdf-page-right]');
+            const leftPage = viewer.querySelector('[data-pdf-page-left]');
+            const rightPageNumber = viewer.querySelector('[data-pdf-page-number-right]');
+            const leftPageNumberLabel = viewer.querySelector('[data-pdf-page-number-left]');
+            const leftPageSlot = leftPage.closest('.pdf-page-slot');
+            const singlePageQuery = window.matchMedia('(max-width: 767.98px)');
+            let currentPage = 1;
+
+            function isSinglePageMode() {
+                return singlePageQuery.matches;
+            }
+
+            function normalizePage(pageNumber) {
+                if (isSinglePageMode()) {
+                    return pageNumber;
+                }
+
+                return pageNumber % 2 === 0 ? pageNumber - 1 : pageNumber;
+            }
+
+            function renderPages(nextPage) {
+                if (nextPage < 1 || nextPage > pages.length) {
+                    return;
+                }
+
+                currentPage = normalizePage(nextPage);
+                viewer.classList.toggle('pdf-single-page-mode', isSinglePageMode());
+
+                rightPage.src = pages[currentPage - 1];
+                rightPage.alt = `עמוד ${currentPage}`;
+                rightPageNumber.textContent = currentPage;
+
+                const leftPageNumber = currentPage + 1;
+                if (!isSinglePageMode() && leftPageNumber <= pages.length) {
+                    leftPageSlot.hidden = false;
+                    leftPageNumberLabel.hidden = false;
+                    leftPage.src = pages[leftPageNumber - 1];
+                    leftPage.alt = `עמוד ${leftPageNumber}`;
+                    leftPageNumberLabel.textContent = leftPageNumber;
+                } else {
+                    leftPageSlot.hidden = true;
+                    leftPageNumberLabel.hidden = true;
+                    leftPage.removeAttribute('src');
+                    leftPage.alt = '';
+                }
+            }
+
+            viewer.querySelectorAll('[data-pdf-next]').forEach(button => {
+                button.addEventListener('click', () => renderPages(currentPage + (isSinglePageMode() ? 1 : 2)));
+            });
+
+            viewer.querySelectorAll('[data-pdf-previous]').forEach(button => {
+                button.addEventListener('click', () => renderPages(currentPage - (isSinglePageMode() ? 1 : 2)));
+            });
+
+            singlePageQuery.addEventListener('change', () => renderPages(currentPage));
+
+            renderPages(1);
+        })();
+    </script>
+}
+else
+{
+    <p class="pdf-fallback">
+        התצוגה באתר עדיין לא מוכנה לפרק הזה. אפשר לפתוח את הקובץ המקורי:
+        <a href="@Model.PdfUrl">פתיחת PDF</a>
+    </p>
+}

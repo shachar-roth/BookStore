@@ -1,0 +1,68 @@
+@page "/OrderDetails"
+@{
+    ViewData["Title"] = "פרטי הזמנה";
+}
+
+<section class="simple-page order-page" data-order-details>
+    <span class="section-tag">פרטי הזמנה</span>
+    <h1>הזמנת הנערה בנקבה</h1>
+    <p>
+        בחרתם: <strong data-order-option-title>ספר פיזי - דואר ישראל</strong>.
+        מחיר הספר: <strong><span data-order-unit-price>60</span> ש"ח</strong>.
+        <span data-order-delivery-text>משלוח בדואר ישראל ללא עלות נוספת.</span>
+    </p>
+
+    <form class="preorder-form order-form" data-order-form data-thanks-url="/OrderThanks">
+        <input type="hidden" name="bookType" value="physical" data-order-book-type />
+        <input type="hidden" name="deliveryMethod" value="israel-mail" data-order-delivery-method />
+        <input type="hidden" name="unitPrice" value="60" data-order-unit-price-input />
+
+        <label>
+            שם מלא
+            <input class="form-control" name="name" autocomplete="name" maxlength="80" required />
+        </label>
+
+        <label>
+            טלפון
+            <input class="form-control" name="phone" autocomplete="tel" maxlength="30" required />
+        </label>
+
+        <label>
+            אימייל
+            <input class="form-control" name="email" type="email" autocomplete="email" maxlength="120" required />
+        </label>
+
+        <label>
+            כמות
+            <input class="form-control" name="quantity" type="number" min="1" max="25" value="1" required />
+        </label>
+
+        <div class="order-shipping-fields full-width" data-order-shipping-fields>
+            <label class="full-width">
+                כתובת למשלוח
+                <input class="form-control" name="address" autocomplete="street-address" maxlength="160" required data-shipping-required />
+            </label>
+
+            <label>
+                עיר
+                <input class="form-control" name="city" autocomplete="address-level2" maxlength="80" required data-shipping-required />
+            </label>
+
+            <label>
+                מיקוד
+                <input class="form-control" name="postalCode" autocomplete="postal-code" maxlength="20" />
+            </label>
+        </div>
+
+        <label class="full-width">
+            הערות
+            <textarea class="form-control" name="notes" rows="4" maxlength="500" placeholder="לדוגמה: הוראות מיוחדות או פרטים שחשוב לדעת"></textarea>
+        </label>
+
+        <div class="order-form-actions full-width">
+            <a class="btn btn-secondary-outline" asp-page="/Order">חזרה לאפשרויות</a>
+            <button class="btn btn-accent" type="submit" data-order-submit>שליחת הזמנה</button>
+            <p class="order-form-status" data-order-status role="status" aria-live="polite"></p>
+        </div>
+    </form>
+</section>

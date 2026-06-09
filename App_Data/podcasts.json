@@ -1,0 +1,20 @@
+[
+  {
+    "Id": "0dd7203b-9db6-4d28-9d01-8869b58e51d4",
+    "Title": "\u05E4\u05D5\u05D3\u05E7\u05E1\u05D8 \u05D1\u05D3\u05D9\u05E7\u05D4 \u05D0\u05D5\u05D8\u05D5\u05DE\u05D8\u05D9",
+    "FileName": "3b53700a9ab442b987f145dbc6f0423f.mp4",
+    "OriginalFileName": "test-podcast.mp4",
+    "IsPublished": true,
+    "UpdatedAtUtc": "2026-04-21T05:49:32.3926378Z",
+    "PublicUrl": "/media/podcasts/3b53700a9ab442b987f145dbc6f0423f.mp4"
+  },
+  {
+    "Id": "fb9740b9-f71d-406e-955a-9b046576aa7f",
+    "Title": "\u05D6\u05D5\u05D2\u05D9\u05D5\u05EA \u05DC\u05E1\u05D1\u05D9\u05EA \u05D1\u05D4\u05DC\u05DB\u05D4",
+    "FileName": "d3180507a21a4858a149d6a1df927b64.m4a",
+    "OriginalFileName": "\u05D6\u05D5\u05D2\u05D9\u05D5\u05EA_\u05DC\u05E1\u05D1\u05D9\u05EA_\u05DE\u05E4\u05E8\u05D9\u05E6\u05D5\u05EA\u05D0_\u05D1\u05E2\u05DC\u05DE\u05D0_\u05DC\u05D9\u05D9\u05E9\u05D5\u05D1_\u05D4\u05E2\u05D5\u05DC\u05DD.m4a",
+    "IsPublished": true,
+    "UpdatedAtUtc": "2026-04-21T14:13:14.4704047Z",
+    "PublicUrl": "/media/podcasts/d3180507a21a4858a149d6a1df927b64.m4a"
+  }
+]

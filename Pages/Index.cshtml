@@ -1,0 +1,139 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "עין המלך";
+}
+
+<section class="cinema-hero" data-video-hero>
+    <div class="cinema-frame">
+        <div class="video-shell">
+            <video class="hero-video" autoplay muted playsinline controls data-hero-video>
+                <source src="~/media/ein-hamelech-hero.mp4" type="video/mp4" />
+                הדפדפן לא תומך בהפעלת וידאו.
+            </video>
+        </div>
+    </div>
+</section>
+
+<section class="landing-section books-section">
+    <div class="section-heading ornamented-heading">
+        <img class="series-icon" src="~/media/branding/series-icon.png" alt="" aria-hidden="true" />
+        <h1 class="section-title-accent">הספרים בסדרה</h1>
+        <img class="series-icon" src="~/media/branding/series-icon.png" alt="" aria-hidden="true" />
+    </div>
+
+    <div class="book-grid">
+        <article class="store-book-card">
+            <div class="store-book-cover">
+                <img src="~/media/book-covers/haneara-banikba.png" alt="כריכת הספר הנערה בנקבה" />
+            </div>
+            <div class="store-book-content">
+                <h2>הנערה בנקבה</h2>
+                <p>
+                    נוגה היא נערה דתייה ודיסלקטית בת 16, ואין לה מושג למה התקבלה לאולפנה היוקרתית ביותר בארץ. היא לא אמורה להיות שם, אבל היא תעשה הכול כדי להישאר.
+                </p>
+                <p>
+                    כשהיא מתחילה ללמוד במקום החדש, נוגה מגלה שהעבר המשפחתי שלה אינו כפי שחשבה: מאחורי הקלעים מסתתרים סודות עתיקים על שושלות נשכחות, מקורות כוח מסוכנים והיסטוריה אפלה.
+                </p>
+                <p>
+                    אבל ככל שנוגה מתקרבת לאמת, היא נאלצת להתמודד עם שאלה אחת שמערערת את הכול: האם הכוח שמתעורר בה הוא טוב או מסוכן? ולמי בכלל אפשר להאמין כשהכול סביבך בנוי על סודות ושקרים?
+                </p>
+                <p>
+                    כוחות־על, מיסטיקה יהודית, אהבות וחברויות נשזרים יחד בעולם שבו שום דבר אינו כפי שהוא נראה.
+                </p>
+                <div class="book-actions">
+                    <a class="btn btn-secondary-outline" asp-page="/FirstChapters">התחל לקרוא</a>
+                    <a class="btn btn-accent" asp-page="/Order">הזמן עכשיו</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="store-book-card">
+            <div class="store-book-cover alt-cover">
+                <img src="~/media/book-covers/hayom-hashmini.png" alt="כריכת הספר היום השמיני" />
+            </div>
+            <div class="store-book-content">
+                <h2>היום השמיני</h2>
+                <p>
+                    הספר הבא בסדרה, פרטים נוספים על הספר יעלו בקרוב.
+                </p>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="landing-section links-section">
+    <div class="section-heading ornamented-heading">
+        <img class="series-icon" src="~/media/branding/series-icon.png" alt="" aria-hidden="true" />
+        <h2 class="section-title-accent">עולם עין המלך</h2>
+        <img class="series-icon" src="~/media/branding/series-icon.png" alt="" aria-hidden="true" />
+    </div>
+
+    <div class="character-grid">
+        <article class="character-card">
+            <div class="character-portrait character-photo">
+                <img src="~/media/gallery/30f9736ec8f84bfdb571814ccc6d5543.jpeg" alt="נוגה" />
+            </div>
+            <div class="character-content">
+                <h2>נוגה</h2>
+                <p>
+                    בת 16 ממשפחת ראובני, מתמודדת עם דיסלקטיה ועם תחושת כישלון תמידית בלימודים. כשהיא מגלה את כוח העין, היא מוכנה לעשות הכול כדי לשנות את חייה — גם אם המחיר יהיה כבד משציפתה.
+                </p>
+            </div>
+        </article>
+
+        <article class="character-card">
+            <div class="character-portrait character-photo">
+                <img src="~/media/gallery/emuna.jpeg" alt="אמונה" />
+            </div>
+            <div class="character-content">
+                <h2>אמונה</h2>
+                <p>
+                    החברה הכי טובה של נוגה… לפחות עד שנוגה התחילה להסתיר ממנה את סוד כוח העין. אבל גם לאמונה יש סודות משלה, כאלה שעלולים לשנות את כל מה שנוגה חושבת שהיא יודעת עליה.
+                </p>
+            </div>
+        </article>
+
+        <article class="character-card">
+            <div class="character-portrait character-photo">
+                <img src="~/media/gallery/af4e778adb85444a830d516c95639843.jpeg" alt="ווקס" />
+            </div>
+            <div class="character-content">
+                <h2>ווקס</h2>
+                <p>
+                    נער חדש, דתי מאוד וכובש לב, שמצטרף לסניף בני עקיבא של נוגה. כבן של דיפלומט הוא נדד בין מדינות ותרבויות כל חייו, אבל דווקא עכשיו הוא עומד למצוא את עצמו בלב הסודות הכי גדולים של האולפנה.
+                </p>
+            </div>
+        </article>
+    </div>
+
+    <a class="world-more-button" asp-page="/TheWorld">
+        <span>עוד על העולם</span>
+    </a>
+</section>
+
+<section id="contact" class="landing-section author-contact-section">
+    <div class="section-heading ornamented-heading">
+        <img class="series-icon" src="~/media/branding/series-icon.png" alt="" aria-hidden="true" />
+        <h2 class="section-title-accent">הסופרת</h2>
+        <img class="series-icon" src="~/media/branding/series-icon.png" alt="" aria-hidden="true" />
+    </div>
+
+    <div class="author-card-grid">
+        <article class="author-info-card author-bio-card">
+            <h3>שקד שירה רוט</h3>
+            <p>
+                שקד שירה רוט מתגוררת עם בעלה ושלושת ילדיהם בבנימינה. היא דיסלקטית ואולפניסטית בדימוס. היא למדה קולנוע בסם–שפיגל בירושלים, עבדה בארט–טק, אוהבת לעשות יוגה, לצפות בסרטים, ולרכב עם ילדיה על גלגליות.
+            </p>
+        </article>
+
+        <article class="author-info-card author-links-card">
+            <div class="author-links">
+                <h3>מוזמנים ליצור קשר</h3>
+                <a class="author-email-link" href="mailto:shakedshira+website@gmail.com">shakedshira+website@gmail.com</a>
+                <h3>או לעקוב</h3>
+                <a class="author-social-text-link" href="https://www.tiktok.com/@@shakedshiraroth?_r=1&_t=ZS-96r27CU4ZZ2" target="_blank" rel="noopener">shakedshira@@tiktok</a>
+            </div>
+        </article>
+    </div>
+</section>

@@ -1,0 +1,34 @@
+@page
+@model BookBoutique.Pages.PodcastModel
+@{
+    ViewData["Title"] = "פודקסט על הספר";
+}
+
+<section class="simple-page">
+    <span class="section-tag">האזנה</span>
+    <h1>פודקסט על הספר</h1>
+    <p>כאן תוכלו להאזין לשיחות, פרקים מוקלטים ותוכן קולי סביב הספר.</p>
+</section>
+
+<section class="podcast-list">
+    @if (Model.Items.Count == 0)
+    {
+        <section class="simple-page">
+            <span class="section-tag">בקרוב</span>
+            <p>עדיין לא נוספו פרקי פודקסט.</p>
+        </section>
+    }
+    else
+    {
+        @foreach (var item in Model.Items)
+        {
+            <article class="podcast-card">
+                <h2>@item.Title</h2>
+                <audio controls preload="none" class="podcast-player">
+                    <source src="@item.PublicUrl" />
+                    הדפדפן לא תומך בהשמעת אודיו.
+                </audio>
+            </article>
+        }
+    }
+</section>

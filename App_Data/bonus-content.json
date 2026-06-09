@@ -1,0 +1,38 @@
+[
+  {
+    "Id": "992c925e-a845-461c-a3d2-0a4a7ed25454",
+    "Title": "\u05D4\u05D7\u05D1\u05E8\u05D9\u05DD \u05E9\u05DC \u05D0\u05D9\u05D9\u05DC\u05D4",
+    "Summary": "\u05E4\u05E8\u05E7 \u05E9\u05DE\u05EA\u05E8\u05D7\u05E9 \u05DE\u05D9\u05D3 \u05D0\u05D7\u05E8\u05D9 \u05E9\u05E0\u05D5\u05D2\u05D4 \u05D5\u05D5\u05E7\u05E1 \u05D5\u05D0\u05D9\u05DC\u05D4 \u05E4\u05D5\u05D2\u05E9\u05D9\u05DD \u05D0\u05EA \u05D4\u05E9\u05D1\u05D8 \u05D4\u05D0\u05D1\u05D5\u05D3 \u05D5\u05D5\u05E7\u05E1 \u05D0\u05D5\u05DE\u05E8 \u05DC\u05E0\u05D5\u05D2\u05D4 \u05E9\u05D4\u05D5\u05D0 \u05DC\u05D0 \u05E8\u05D5\u05E6\u05D4 \u05DC\u05D4\u05DE\u05E9\u05D9\u05DA \u05DC\u05D4\u05D9\u05D5\u05EA \u05D1\u05E7\u05E9\u05E8.",
+    "Body": "",
+    "PdfFileName": "4b2ff547929a4aefbcc9e0695d654869.pdf",
+    "OriginalPdfFileName": "\u05D4\u05D2\u05D2 \u05E9\u05DC \u05D4\u05D7\u05D1\u05E8\u05D9\u05DD \u05E9\u05DC \u05D0\u05D9\u05D9\u05DC\u05D4.pdf",
+    "PdfPageImageFileNames": [
+      "992c925ea845461ca3d20a4a7ed25454/page-001.png",
+      "992c925ea845461ca3d20a4a7ed25454/page-002.png",
+      "992c925ea845461ca3d20a4a7ed25454/page-003.png",
+      "992c925ea845461ca3d20a4a7ed25454/page-004.png",
+      "992c925ea845461ca3d20a4a7ed25454/page-005.png",
+      "992c925ea845461ca3d20a4a7ed25454/page-006.png",
+      "992c925ea845461ca3d20a4a7ed25454/page-007.png"
+    ],
+    "IsPublished": true,
+    "UpdatedAtUtc": "2026-05-19T06:06:19.0216541Z"
+  },
+  {
+    "Id": "e42d4585-7f16-4d66-8e51-9efa2791dbed",
+    "Title": "\u05D7\u05E0\u05D5\u05EA \u05DB\u05DC\u05D9 \u05E7\u05D5\u05D3\u05E9",
+    "Summary": "",
+    "Body": "",
+    "PdfFileName": "17903bd1a07b47079888c9e82f8fdb23.pdf",
+    "OriginalPdfFileName": "\u05D7\u05E0\u05D5\u05EA \u05DB\u05DC\u05D9 \u05D4\u05E7\u05D5\u05D3\u05E9.pdf",
+    "PdfPageImageFileNames": [
+      "e42d45857f164d668e519efa2791dbed/page-001.png",
+      "e42d45857f164d668e519efa2791dbed/page-002.png",
+      "e42d45857f164d668e519efa2791dbed/page-003.png",
+      "e42d45857f164d668e519efa2791dbed/page-004.png",
+      "e42d45857f164d668e519efa2791dbed/page-005.png"
+    ],
+    "IsPublished": true,
+    "UpdatedAtUtc": "2026-05-19T06:01:39.0771356Z"
+  }
+]

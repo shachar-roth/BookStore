@@ -1,0 +1,103 @@
+@page
+@model BookBoutique.Pages.Admin.BonusContentModel
+@{
+    ViewData["Title"] = "ניהול תוכן בלעדי";
+}
+
+<section class="admin-shell">
+    <div class="admin-toolbar">
+        <div>
+            <span class="section-tag">ניהול</span>
+            <h1>פרקים שאפשר לקרוא רק באתר</h1>
+        </div>
+        <div class="admin-actions">
+            <a class="btn btn-secondary-outline" asp-page="/Admin/Index">חזרה לאדמין</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+    {
+        <section class="confirmation-banner" aria-live="polite">
+            <strong>@Model.StatusMessage</strong>
+        </section>
+    }
+
+    <section class="admin-grid">
+        <section class="simple-page admin-editor">
+            <span class="section-tag">עריכה</span>
+            <h2>@(Model.Editor.Id == Guid.Empty ? "קטע חדש" : "עריכת קטע")</h2>
+
+            <form method="post" asp-page-handler="Save" class="admin-form" enctype="multipart/form-data">
+                <input asp-for="Editor.Id" type="hidden" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <label>
+                    כותרת
+                    <input asp-for="Editor.Title" class="form-control" />
+                    <span asp-validation-for="Editor.Title" class="text-danger"></span>
+                </label>
+
+                <label>
+                    תקציר קצר
+                    <textarea asp-for="Editor.Summary" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Editor.Summary" class="text-danger"></span>
+                </label>
+
+                <label>
+                    קובץ PDF
+                    <input asp-for="Editor.PdfFile" class="form-control" type="file" accept=".pdf,application/pdf" />
+                    <span asp-validation-for="Editor.PdfFile" class="text-danger"></span>
+                </label>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Editor.ExistingPdfFileName))
+                {
+                    <p class="admin-file-hint">הקובץ הנוכחי: @Model.Editor.ExistingPdfFileName</p>
+                }
+
+                <label class="checkbox-row">
+                    <input asp-for="Editor.IsPublished" />
+                    לפרסם את הקטע באתר
+                </label>
+
+                <div class="admin-actions">
+                    <button type="submit" class="btn btn-accent">שמירה</button>
+                    <a class="btn btn-secondary-outline" asp-page="/Admin/BonusContent">קטע חדש</a>
+                </div>
+            </form>
+        </section>
+
+        <section class="simple-page admin-list">
+            <span class="section-tag">קטעים קיימים</span>
+            <h2>מה כבר מופיע במערכת</h2>
+
+            @foreach (var item in Model.Items)
+            {
+                <article class="admin-item">
+                    <div>
+                        <h3>@item.Title</h3>
+                        <p>@item.Summary</p>
+                        <div class="admin-meta">
+                            <span>@(item.IsPublished ? "מפורסם" : "טיוטה")</span>
+                            <span>@(string.IsNullOrWhiteSpace(item.OriginalPdfFileName) ? "ללא PDF" : item.OriginalPdfFileName)</span>
+                            <span>@item.UpdatedAtUtc.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</span>
+                        </div>
+                    </div>
+                    <div class="admin-item-actions">
+                        <form method="post" asp-page-handler="Edit">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-secondary-outline">עריכה</button>
+                        </form>
+                        <form method="post" asp-page-handler="Delete" onsubmit="return confirm('למחוק את הקטע הזה?');">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-danger-soft">מחיקה</button>
+                        </form>
+                    </div>
+                </article>
+            }
+        </section>
+    </section>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
