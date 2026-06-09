@@ -46,14 +46,13 @@ The GitHub Actions workflow in `.github/workflows/deploy.yml` runs on every push
 2. run `export-static`
 3. deploy `dist` to Cloudflare with Wrangler
 
-Configure these GitHub repository secrets:
+Configure this GitHub repository secret:
 
 ```text
 CLOUDFLARE_API_TOKEN=Cloudflare API token with Workers Scripts edit permission
-CLOUDFLARE_ACCOUNT_ID=Cloudflare account ID
 ```
 
-The Worker deployment config is in `wrangler.jsonc`.
+The Cloudflare account ID is configured in `.github/workflows/deploy.yml`. The Worker deployment config is in `wrangler.jsonc`.
 
 ## Order API Worker
 
