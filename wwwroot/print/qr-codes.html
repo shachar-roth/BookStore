@@ -7,7 +7,7 @@
     <style>
         @page {
             size: A4;
-            margin: 14mm;
+            margin: 10mm;
         }
 
         :root {
@@ -25,7 +25,6 @@
 
         body {
             margin: 0;
-            min-height: 100vh;
             background: var(--paper);
             color: var(--ink);
             font-family: "Noto Serif Hebrew", "David", "Times New Roman", serif;
@@ -33,10 +32,10 @@
 
         .sheet {
             width: 100%;
-            min-height: calc(297mm - 28mm);
+            height: calc(297mm - 20mm);
             display: flex;
             flex-direction: column;
-            gap: 16mm;
+            gap: 8mm;
             align-items: center;
             justify-content: center;
         }
@@ -44,16 +43,16 @@
         .page-title {
             margin: 0;
             color: var(--accent);
-            font-size: 34pt;
+            font-size: 26pt;
             font-weight: 800;
             letter-spacing: 0.04em;
             text-align: center;
         }
 
         .subtitle {
-            margin: -10mm 0 0;
+            margin: -5mm 0 0;
             color: var(--muted);
-            font-size: 13pt;
+            font-size: 12pt;
             text-align: center;
         }
 
@@ -61,40 +60,40 @@
             width: 100%;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 9mm;
+            gap: 6mm;
         }
 
         .qr-card {
-            min-height: 92mm;
-            padding: 8mm 6mm;
+            min-height: 74mm;
+            padding: 5mm 4mm;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            gap: 5mm;
+            gap: 3mm;
             background: var(--card);
             border: 1px solid var(--line);
-            border-radius: 9mm;
+            border-radius: 7mm;
             box-shadow: 0 8px 28px rgba(68, 59, 48, 0.12);
             break-inside: avoid;
         }
 
         .qr-card h2 {
             margin: 0;
-            font-size: 19pt;
+            font-size: 15pt;
             line-height: 1.2;
             text-align: center;
         }
 
         .qr-card img {
-            width: 54mm;
-            height: 54mm;
+            width: 45mm;
+            height: 45mm;
             object-fit: contain;
             display: block;
         }
 
         .qr-note {
-            min-height: 12mm;
+            min-height: 8mm;
             margin: 0;
             color: var(--muted);
             font-size: 10.5pt;
@@ -122,6 +121,13 @@
         }
 
         @media print {
+            html,
+            body {
+                width: 190mm;
+                height: 277mm;
+                overflow: hidden;
+            }
+
             body {
                 background: white;
             }
@@ -132,6 +138,7 @@
 
             .qr-card {
                 box-shadow: none;
+                min-height: 72mm;
             }
         }
 
