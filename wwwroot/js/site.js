@@ -27,22 +27,22 @@ if (orderDetails) {
   const deliveryMethod =
     bookType === "digital"
       ? "digital"
-      : params.get("deliveryMethod") === "home-delivery"
-        ? "home-delivery"
-        : "israel-mail";
+      : params.get("deliveryMethod") === "israel-mail"
+        ? "israel-mail"
+        : "self-pickup";
   const unitPrice = bookType === "digital" ? "27" : "60";
   const optionTitle =
     bookType === "digital"
       ? "ספר דיגיטלי"
-      : deliveryMethod === "home-delivery"
-        ? "ספר פיזי - משלוח עד הבית"
-        : "ספר פיזי - דואר ישראל";
+      : deliveryMethod === "israel-mail"
+        ? "ספר פיזי - משלוח בדואר ישראל"
+        : "ספר פיזי - איסוף עצמי מבנימינה";
   const deliveryText =
     bookType === "digital"
       ? "הספר הדיגיטלי יישלח למייל לאחר אישור התשלום."
-      : deliveryMethod === "home-delivery"
-        ? "עלות המשלוח עד הבית עדיין לא ידועה ותתואם בהמשך."
-        : "משלוח בדואר ישראל ללא עלות נוספת.";
+      : deliveryMethod === "israel-mail"
+        ? "משלוח בדואר ישראל חינם לכבוד ההשקה."
+        : "איסוף עצמי מבנימינה ללא עלות משלוח.";
 
   const optionTitleElement = orderDetails.querySelector("[data-order-option-title]");
   const unitPriceElement = orderDetails.querySelector("[data-order-unit-price]");
@@ -59,7 +59,7 @@ if (orderDetails) {
   if (deliveryMethodInput) deliveryMethodInput.value = deliveryMethod;
   if (unitPriceInput) unitPriceInput.value = unitPrice;
 
-  if (shippingFields && bookType === "digital") {
+  if (shippingFields && (bookType === "digital" || deliveryMethod === "self-pickup")) {
     shippingFields.hidden = true;
     shippingFields.querySelectorAll("[data-shipping-required]").forEach((input) => {
       input.required = false;
@@ -104,7 +104,7 @@ if (orderForm) {
       const redirectParams = new URLSearchParams({
         orderRef: result.orderRef,
         bookType: payload.bookType || "physical",
-        deliveryMethod: payload.deliveryMethod || "israel-mail",
+        deliveryMethod: payload.deliveryMethod || "self-pickup",
         quantity: payload.quantity || "1",
         unitPrice: payload.unitPrice || "60"
       });
@@ -129,7 +129,7 @@ if (orderReference || inlineOrderReference || orderPaymentSummary) {
   const params = new URLSearchParams(window.location.search);
   const orderRef = params.get("orderRef");
   const bookType = params.get("bookType") || "physical";
-  const deliveryMethod = params.get("deliveryMethod") || "israel-mail";
+  const deliveryMethod = params.get("deliveryMethod") || "self-pickup";
   const quantity = Number(params.get("quantity") || "1");
   const unitPrice = Number(params.get("unitPrice") || (bookType === "digital" ? "27" : "60"));
 
@@ -149,9 +149,9 @@ if (orderReference || inlineOrderReference || orderPaymentSummary) {
     const deliveryText =
       bookType === "digital"
         ? "שליחה במייל"
-        : deliveryMethod === "home-delivery"
-          ? "משלוח עד הבית, עלות משלוח תתואם בהמשך"
-          : "דואר ישראל, משלוח חינם";
+        : deliveryMethod === "israel-mail"
+          ? "משלוח בדואר ישראל, חינם לכבוד ההשקה"
+          : "איסוף עצמי מבנימינה";
 
     orderPaymentSummary.textContent = `סיכום לתשלום: ${typeText}, כמות ${quantity}, ${total} ש\"ח. ${deliveryText}.`;
   }

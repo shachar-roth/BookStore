@@ -1,6 +1,6 @@
 const MAX_FIELD_LENGTH = 500;
 const ALLOWED_ORIGIN = "https://ein-hamelech.shakedshira.com";
-const WORKER_VERSION = "2026-06-05-order-options-1";
+const WORKER_VERSION = "2026-06-12-pickup-mail-options-1";
 
 export default {
   async fetch(request, env) {
@@ -51,16 +51,16 @@ function normalizeOrder(order) {
   order.deliveryMethod =
     order.bookType === "digital"
       ? "digital"
-      : order.deliveryMethod === "home-delivery"
-        ? "home-delivery"
-        : "israel-mail";
+      : order.deliveryMethod === "israel-mail"
+        ? "israel-mail"
+        : "self-pickup";
   order.unitPrice = order.bookType === "digital" ? "27" : "60";
 }
 
 function validateOrder(order) {
   const requiredFields = ["name", "phone", "email", "quantity"];
 
-  if (order.bookType === "physical") {
+  if (order.bookType === "physical" && order.deliveryMethod === "israel-mail") {
     requiredFields.push("address", "city");
   }
 
@@ -158,9 +158,9 @@ function createEmailText(order, orderRef) {
   const deliveryText =
     order.bookType === "digital"
       ? "שליחה במייל"
-      : order.deliveryMethod === "home-delivery"
-        ? "משלוח עד הבית - עלות משלוח תתואם בהמשך"
-        : "דואר ישראל - חינם";
+      : order.deliveryMethod === "israel-mail"
+        ? "משלוח בדואר ישראל - חינם לכבוד ההשקה"
+        : "איסוף עצמי מבנימינה";
 
   return [
     `מספר הזמנה: ${orderRef}`,
@@ -175,7 +175,7 @@ function createEmailText(order, orderRef) {
     `אפשרות קבלה: ${deliveryText}`,
     `כמות: ${quantity}`,
     `מחיר ליחידה: ${unitPrice} ש"ח`,
-    `סה"כ לתשלום לפני משלוח עד הבית: ${total} ש"ח`,
+    `סה"כ לתשלום: ${total} ש"ח`,
     "",
     "פרטי משלוח:",
     `כתובת: ${clean(order.address) || "-"}`,
