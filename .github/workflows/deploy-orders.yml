@@ -19,16 +19,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy orders Worker
-        uses: cloudflare/wrangler-action@v3
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Wrangler
+        run: npm install --global wrangler@4
+
+      - name: Set Resend Worker secret
+        shell: bash
+        run: |
+          test -n "$RESEND_API_KEY" || (echo "RESEND_API_KEY is missing" && exit 1)
+          printf "%s" "$RESEND_API_KEY" | wrangler secret put RESEND_API_KEY --config wrangler.orders.jsonc
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: dfd37999070f7d447cb12716687a92f1
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: dfd37999070f7d447cb12716687a92f1
-          wranglerVersion: "4"
-          secrets: |
-            RESEND_API_KEY
-          command: deploy --config wrangler.orders.jsonc --keep-vars
+
+      - name: Deploy orders Worker
+        run: wrangler deploy --config wrangler.orders.jsonc --keep-vars
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: dfd37999070f7d447cb12716687a92f1
