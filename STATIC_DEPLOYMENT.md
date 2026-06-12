@@ -46,10 +46,11 @@ The GitHub Actions workflow in `.github/workflows/deploy.yml` runs on every push
 2. run `export-static`
 3. deploy `dist` to Cloudflare with Wrangler
 
-Configure this GitHub repository secret:
+Configure these GitHub `Cloudflare` environment secrets:
 
 ```text
 CLOUDFLARE_API_TOKEN=Cloudflare API token with Workers Scripts edit permission
+RESEND_API_KEY=your Resend API key
 ```
 
 The Cloudflare account ID is configured in `.github/workflows/deploy.yml`. The Worker deployment config is in `wrangler.jsonc`.
@@ -68,17 +69,16 @@ The current Cloudflare route is:
 ein-hamelech.shakedshira.com/api/order
 ```
 
-Configure these Cloudflare Worker variables/secrets:
+Configure these Cloudflare Worker variables:
 
 ```text
-RESEND_API_KEY=your Resend API key
 ORDER_EMAIL_TO=the mailbox that should receive new orders
 ORDER_EMAIL_FROM=verified sender address in Resend
 ```
 
 The orders Worker is deployed by `.github/workflows/deploy-orders.yml` when `api/ein-hamelech-orders.js` changes, or manually from GitHub Actions. Its Wrangler config is `wrangler.orders.jsonc`.
 
-The orders deploy command uses `--keep-vars` so existing Cloudflare dashboard variables, secrets, and Secret Store bindings are preserved.
+The orders deploy command sets `RESEND_API_KEY` from GitHub Actions and uses `--keep-vars` so existing Cloudflare dashboard variables such as `ORDER_EMAIL_TO` and `ORDER_EMAIL_FROM` are preserved.
 
 The exported site includes:
 
