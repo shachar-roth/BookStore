@@ -76,7 +76,9 @@ ORDER_EMAIL_TO=the mailbox that should receive new orders
 ORDER_EMAIL_FROM=verified sender address in Resend
 ```
 
-The static-site workflow deploys only the `bookstore` Worker. Deploy `api/ein-hamelech-orders.js` separately when the order email Worker changes.
+The orders Worker is deployed by `.github/workflows/deploy-orders.yml` when `api/ein-hamelech-orders.js` changes, or manually from GitHub Actions. Its Wrangler config is `wrangler.orders.jsonc`.
+
+The orders deploy command uses `--keep-vars` so existing Cloudflare dashboard variables, secrets, and Secret Store bindings are preserved.
 
 The exported site includes:
 

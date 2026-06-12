@@ -1,0 +1,31 @@
+name: Deploy Orders Worker
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "api/ein-hamelech-orders.js"
+      - "wrangler.orders.jsonc"
+      - ".github/workflows/deploy-orders.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy-orders:
+    runs-on: ubuntu-latest
+    environment: Cloudflare
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy orders Worker
+        uses: cloudflare/wrangler-action@v3
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: dfd37999070f7d447cb12716687a92f1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: dfd37999070f7d447cb12716687a92f1
+          wranglerVersion: "4"
+          command: deploy --config wrangler.orders.jsonc --keep-vars

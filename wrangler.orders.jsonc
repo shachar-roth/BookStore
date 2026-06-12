@@ -1,0 +1,6 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ein-hamelech-orders",
+  "main": "./api/ein-hamelech-orders.js",
+  "compatibility_date": "2026-06-12"
+}
