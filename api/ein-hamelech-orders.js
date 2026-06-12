@@ -1,6 +1,6 @@
 const MAX_FIELD_LENGTH = 500;
 const ALLOWED_ORIGIN = "https://ein-hamelech.shakedshira.com";
-const WORKER_VERSION = "2026-06-12-pickup-mail-options-1";
+const WORKER_VERSION = "2026-06-12-pickup-mail-options-2";
 
 export default {
   async fetch(request, env) {
