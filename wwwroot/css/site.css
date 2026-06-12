@@ -302,25 +302,28 @@ a {
   box-shadow: var(--shadow);
   backdrop-filter: blur(14px);
   text-decoration: none;
+  font-size: clamp(1.65rem, 3vw, 2.45rem);
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .world-more-button span {
   display: inline-flex;
   align-items: center;
-  font-size: clamp(1.65rem, 3vw, 2.45rem);
+  font-size: 1em;
   font-weight: 800;
   letter-spacing: 0.03em;
 }
 
 .world-more-button::after {
-  content: "˂˂˂";
+  content: "‹‹‹";
   position: absolute;
   left: clamp(1.25rem, 4vw, 2.5rem);
   top: 50%;
   transform: translateY(-50%);
   color: var(--accent);
-  font-size: clamp(2rem, 4vw, 3.4rem);
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-size: 1.85em;
   font-weight: 800;
   letter-spacing: -0.12em;
   line-height: 1;

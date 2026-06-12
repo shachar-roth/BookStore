@@ -57,12 +57,13 @@
             const rightPageNumber = viewer.querySelector('[data-pdf-page-number-right]');
             const leftPageNumberLabel = viewer.querySelector('[data-pdf-page-number-left]');
             const leftPageSlot = leftPage.closest('.pdf-page-slot');
-            const pageShell = viewer.querySelector('.pdf-page-shell');
             const singlePageQuery = window.matchMedia('(max-width: 767.98px)');
             let currentPage = 1;
             let touchStartX = 0;
             let touchStartY = 0;
             let touchStartTime = 0;
+            let ignoreTouchGesture = false;
+            let suppressClickUntil = 0;
 
             function isSinglePageMode() {
                 return singlePageQuery.matches;
@@ -145,46 +146,62 @@
             }
 
             viewer.querySelectorAll('[data-pdf-next]').forEach(button => {
-                button.addEventListener('click', goNext);
+                button.addEventListener('click', event => {
+                    if (Date.now() < suppressClickUntil) {
+                        event.preventDefault();
+                        return;
+                    }
+
+                    goNext();
+                });
             });
 
             viewer.querySelectorAll('[data-pdf-previous]').forEach(button => {
-                button.addEventListener('click', goPrevious);
+                button.addEventListener('click', event => {
+                    if (Date.now() < suppressClickUntil) {
+                        event.preventDefault();
+                        return;
+                    }
+
+                    goPrevious();
+                });
             });
 
-            if (pageShell) {
-                pageShell.addEventListener('touchstart', event => {
-                    if (event.touches.length !== 1) {
-                        return;
-                    }
+            viewer.addEventListener('touchstart', event => {
+                ignoreTouchGesture = event.target.closest('a, .pdf-toolbar') !== null;
 
-                    const [touch] = event.touches;
-                    touchStartX = touch.clientX;
-                    touchStartY = touch.clientY;
-                    touchStartTime = Date.now();
-                }, { passive: true });
+                if (ignoreTouchGesture || event.touches.length !== 1) {
+                    return;
+                }
 
-                pageShell.addEventListener('touchend', event => {
-                    if (event.changedTouches.length !== 1) {
-                        return;
-                    }
+                const [touch] = event.touches;
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
+                touchStartTime = Date.now();
+            }, { passive: true, capture: true });
 
-                    const [touch] = event.changedTouches;
-                    const deltaX = touch.clientX - touchStartX;
-                    const deltaY = touch.clientY - touchStartY;
-                    const elapsed = Date.now() - touchStartTime;
+            viewer.addEventListener('touchend', event => {
+                if (ignoreTouchGesture || event.changedTouches.length !== 1) {
+                    return;
+                }
 
-                    if (elapsed > 800 || Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY) * 1.4) {
-                        return;
-                    }
+                const [touch] = event.changedTouches;
+                const deltaX = touch.clientX - touchStartX;
+                const deltaY = touch.clientY - touchStartY;
+                const elapsed = Date.now() - touchStartTime;
 
-                    if (deltaX < 0) {
-                        goNext();
-                    } else {
-                        goPrevious();
-                    }
-                }, { passive: true });
-            }
+                if (elapsed > 800 || Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY) * 1.4) {
+                    return;
+                }
+
+                suppressClickUntil = Date.now() + 450;
+
+                if (deltaX < 0) {
+                    goPrevious();
+                } else {
+                    goNext();
+                }
+            }, { passive: true, capture: true });
 
             singlePageQuery.addEventListener('change', () => renderPages(currentPage));
 
