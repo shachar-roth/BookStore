@@ -3,6 +3,7 @@
 
 @if (Model.PageImageUrls.Count > 0)
 {
+    var endPage = Model.EndPage;
     <section class="pdf-book-viewer" data-page-urls="@JsonSerializer.Serialize(Model.PageImageUrls)" dir="rtl">
         <button class="pdf-turn-zone pdf-turn-next" type="button" data-pdf-next aria-label="לעמודים הבאים"></button>
         <button class="pdf-turn-zone pdf-turn-previous" type="button" data-pdf-previous aria-label="לעמודים הקודמים"></button>
@@ -16,9 +17,25 @@
             <div class="pdf-page-spread">
                 <figure class="pdf-page-slot pdf-page-right">
                     <img class="pdf-page-image" data-pdf-page-right src="@Model.PageImageUrls[0]" alt="עמוד 1" />
+                    @if (endPage is not null)
+                    {
+                        <div class="pdf-end-page" data-pdf-end-page-right hidden>
+                            <h2>@endPage.Title</h2>
+                            <p>@endPage.Text</p>
+                            <a class="btn btn-accent" href="@endPage.ButtonUrl">@endPage.ButtonText</a>
+                        </div>
+                    }
                 </figure>
                 <figure class="pdf-page-slot pdf-page-left">
                     <img class="pdf-page-image" data-pdf-page-left alt="עמוד 2" />
+                    @if (endPage is not null)
+                    {
+                        <div class="pdf-end-page" data-pdf-end-page-left hidden>
+                            <h2>@endPage.Title</h2>
+                            <p>@endPage.Text</p>
+                            <a class="btn btn-accent" href="@endPage.ButtonUrl">@endPage.ButtonText</a>
+                        </div>
+                    }
                 </figure>
             </div>
         </div>
@@ -32,13 +49,20 @@
         (() => {
             const viewer = document.querySelector('[data-page-urls]');
             const pages = JSON.parse(viewer.dataset.pageUrls);
+            const hasEndPage = @JsonSerializer.Serialize(endPage is not null);
             const rightPage = viewer.querySelector('[data-pdf-page-right]');
             const leftPage = viewer.querySelector('[data-pdf-page-left]');
+            const rightEndPage = viewer.querySelector('[data-pdf-end-page-right]');
+            const leftEndPage = viewer.querySelector('[data-pdf-end-page-left]');
             const rightPageNumber = viewer.querySelector('[data-pdf-page-number-right]');
             const leftPageNumberLabel = viewer.querySelector('[data-pdf-page-number-left]');
             const leftPageSlot = leftPage.closest('.pdf-page-slot');
+            const pageShell = viewer.querySelector('.pdf-page-shell');
             const singlePageQuery = window.matchMedia('(max-width: 767.98px)');
             let currentPage = 1;
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchStartTime = 0;
 
             function isSinglePageMode() {
                 return singlePageQuery.matches;
@@ -52,40 +76,115 @@
                 return pageNumber % 2 === 0 ? pageNumber - 1 : pageNumber;
             }
 
+            function maxPageNumber() {
+                return pages.length + (hasEndPage ? 1 : 0);
+            }
+
+            function renderSlot(image, endPage, pageNumber, pageNumberLabel) {
+                const isEndPage = hasEndPage && pageNumber === pages.length + 1;
+
+                if (isEndPage) {
+                    image.hidden = true;
+                    image.removeAttribute('src');
+                    image.alt = '';
+
+                    if (endPage) {
+                        endPage.hidden = false;
+                    }
+
+                    pageNumberLabel.textContent = '';
+                    return;
+                }
+
+                if (endPage) {
+                    endPage.hidden = true;
+                }
+
+                image.hidden = false;
+                image.src = pages[pageNumber - 1];
+                image.alt = `עמוד ${pageNumber}`;
+                pageNumberLabel.textContent = pageNumber;
+            }
+
             function renderPages(nextPage) {
-                if (nextPage < 1 || nextPage > pages.length) {
+                if (nextPage < 1 || nextPage > maxPageNumber()) {
                     return;
                 }
 
                 currentPage = normalizePage(nextPage);
                 viewer.classList.toggle('pdf-single-page-mode', isSinglePageMode());
 
-                rightPage.src = pages[currentPage - 1];
-                rightPage.alt = `עמוד ${currentPage}`;
-                rightPageNumber.textContent = currentPage;
+                renderSlot(rightPage, rightEndPage, currentPage, rightPageNumber);
 
                 const leftPageNumber = currentPage + 1;
-                if (!isSinglePageMode() && leftPageNumber <= pages.length) {
+                if (!isSinglePageMode() && leftPageNumber <= maxPageNumber()) {
                     leftPageSlot.hidden = false;
                     leftPageNumberLabel.hidden = false;
-                    leftPage.src = pages[leftPageNumber - 1];
-                    leftPage.alt = `עמוד ${leftPageNumber}`;
-                    leftPageNumberLabel.textContent = leftPageNumber;
+                    renderSlot(leftPage, leftEndPage, leftPageNumber, leftPageNumberLabel);
                 } else {
                     leftPageSlot.hidden = true;
                     leftPageNumberLabel.hidden = true;
+                    if (leftEndPage) {
+                        leftEndPage.hidden = true;
+                    }
                     leftPage.removeAttribute('src');
                     leftPage.alt = '';
                 }
             }
 
+            function pageStep() {
+                return isSinglePageMode() ? 1 : 2;
+            }
+
+            function goNext() {
+                renderPages(currentPage + pageStep());
+            }
+
+            function goPrevious() {
+                renderPages(currentPage - pageStep());
+            }
+
             viewer.querySelectorAll('[data-pdf-next]').forEach(button => {
-                button.addEventListener('click', () => renderPages(currentPage + (isSinglePageMode() ? 1 : 2)));
+                button.addEventListener('click', goNext);
             });
 
             viewer.querySelectorAll('[data-pdf-previous]').forEach(button => {
-                button.addEventListener('click', () => renderPages(currentPage - (isSinglePageMode() ? 1 : 2)));
+                button.addEventListener('click', goPrevious);
             });
+
+            if (pageShell) {
+                pageShell.addEventListener('touchstart', event => {
+                    if (event.touches.length !== 1) {
+                        return;
+                    }
+
+                    const [touch] = event.touches;
+                    touchStartX = touch.clientX;
+                    touchStartY = touch.clientY;
+                    touchStartTime = Date.now();
+                }, { passive: true });
+
+                pageShell.addEventListener('touchend', event => {
+                    if (event.changedTouches.length !== 1) {
+                        return;
+                    }
+
+                    const [touch] = event.changedTouches;
+                    const deltaX = touch.clientX - touchStartX;
+                    const deltaY = touch.clientY - touchStartY;
+                    const elapsed = Date.now() - touchStartTime;
+
+                    if (elapsed > 800 || Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY) * 1.4) {
+                        return;
+                    }
+
+                    if (deltaX < 0) {
+                        goNext();
+                    } else {
+                        goPrevious();
+                    }
+                }, { passive: true });
+            }
 
             singlePageQuery.addEventListener('change', () => renderPages(currentPage));
 

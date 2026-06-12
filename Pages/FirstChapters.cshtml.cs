@@ -18,5 +18,17 @@ public class FirstChaptersModel : PageModel
     public async Task OnGetAsync()
     {
         BookViewer = await _firstChaptersStore.GetBookViewerAsync(HttpContext.RequestAborted);
+        BookViewer = new PdfBookViewerModel
+        {
+            PdfUrl = BookViewer.PdfUrl,
+            PageImageUrls = BookViewer.PageImageUrls,
+            EndPage = new PdfBookViewerEndPageModel
+            {
+                Title = "זה סוף הפרקים החינמיים",
+                Text = "כדי להמשיך לקרוא את עין המלך, אפשר להזמין את הספר המלא",
+                ButtonText = "הזמן עכשיו",
+                ButtonUrl = "/Order"
+            }
+        };
     }
 }

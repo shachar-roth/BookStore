@@ -68,6 +68,10 @@ function validateOrder(order) {
     return "INVALID_QUANTITY";
   }
 
+  if (order.bookType === "digital" && quantity !== 1) {
+    return "INVALID_DIGITAL_QUANTITY";
+  }
+
   for (const value of Object.values(order)) {
     if (typeof value === "string" && value.length > MAX_FIELD_LENGTH) {
       return "FIELD_TOO_LONG";
@@ -134,7 +138,7 @@ function createEmailText(order, orderRef) {
   const quantity = Number(order.quantity);
   const unitPrice = Number(order.unitPrice);
   const total = quantity * unitPrice;
-  const bookTypeText = order.bookType === "digital" ? "ספר דיגיטלי" : "ספר פיזי";
+  const bookTypeText = order.bookType === "digital" ? "ספר דיגיטלי" : "ספר מודפס";
   const deliveryText =
     order.bookType === "digital"
       ? "שליחה במייל"

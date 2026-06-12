@@ -48,7 +48,10 @@ webApp.Run();
 
 static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
 {
-    services.AddRazorPages();
+    services.AddRazorPages(options =>
+    {
+        options.Conventions.AddPageRoute("/OrderThanks", "/OrderThanks");
+    });
     services.AddSingleton<BookBoutique.Services.PreorderStore>();
     services.AddSingleton<BookBoutique.Services.PdfPageImageRenderer>();
     services.AddSingleton<BookBoutique.Services.BonusContentStore>();

@@ -49,7 +49,7 @@ public sealed partial class StaticSiteExporter
             new("/FirstChapters", "first-chapters.html"),
             new("/Order", "order.html"),
             new("/OrderDetails", "order-details.html"),
-            new("/OrderThanks", "order-thanks.html"),
+            new("/order-thanks", "order-thanks.html"),
             new("/Bonus", "bonus.html"),
             new("/Podcast", "podcast.html"),
             new("/TheWorld", "the-world.html"),
@@ -168,7 +168,9 @@ public sealed partial class StaticSiteExporter
         html = html.Replace("href=\"/Order\"", $"href=\"{prefix}order.html\"");
         html = html.Replace("href=\"/OrderDetails", $"href=\"{prefix}order-details.html");
         html = html.Replace("href=\"/OrderThanks\"", $"href=\"{prefix}order-thanks.html\"");
+        html = html.Replace("href=\"/order-thanks\"", $"href=\"{prefix}order-thanks.html\"");
         html = html.Replace("data-thanks-url=\"/OrderThanks\"", $"data-thanks-url=\"{prefix}order-thanks.html\"");
+        html = html.Replace("data-thanks-url=\"/order-thanks\"", $"data-thanks-url=\"{prefix}order-thanks.html\"");
         html = html.Replace("href=\"/Bonus\"", $"href=\"{prefix}bonus.html\"");
         html = html.Replace("href=\"/Podcast\"", $"href=\"{prefix}podcast.html\"");
         html = html.Replace("href=\"/TheWorld\"", $"href=\"{prefix}the-world.html\"");

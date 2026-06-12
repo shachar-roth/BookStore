@@ -1,15 +1,41 @@
-@page "/OrderThanks"
+@page "/order-thanks"
 @{
     ViewData["Title"] = "ההזמנה התקבלה";
 }
 
 <section class="simple-page order-thanks-page">
     <h1>ההזמנה התקבלה</h1>
-    <p>
-        מספר ההזמנה שלך:
+    <div class="order-reference-row">
+        <span>מספר ההזמנה שלך:</span>
         <strong data-order-reference>יופיע כאן לאחר שליחת הטופס</strong>
-    </p>
-    <p class="order-payment-summary" data-order-payment-summary></p>
+        <button class="copy-order-button" type="button" data-copy-order-reference aria-label="העתקת מספר ההזמנה">
+            <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+                <path d="M8 7a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-1v1a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-6a3 3 0 0 1 3-3h1V7Zm3-1a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-6Zm-3 4H7a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-1h-3a3 3 0 0 1-3-3v-3Z" />
+            </svg>
+            <span data-copy-order-label>העתקה</span>
+        </button>
+    </div>
+    <div class="order-payment-summary" data-order-payment-summary hidden>
+        <h2>פרטי הזמנה:</h2>
+        <dl>
+            <div>
+                <dt>סוג:</dt>
+                <dd data-order-summary-type></dd>
+            </div>
+            <div>
+                <dt>כמות:</dt>
+                <dd data-order-summary-quantity></dd>
+            </div>
+            <div>
+                <dt>משלוח:</dt>
+                <dd data-order-summary-delivery></dd>
+            </div>
+            <div>
+                <dt>סכום לתשלום:</dt>
+                <dd data-order-summary-total></dd>
+            </div>
+        </dl>
+    </div>
 
     <div class="payment-instructions">
         <h2>תשלום מהיר בביט או בפייבוקס</h2>

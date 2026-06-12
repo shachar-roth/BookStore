@@ -6,12 +6,12 @@
 <section class="simple-page order-page" data-order-details>
     <h1>הזמנת הנערה בנקבה</h1>
     <p>
-        בחרתם: <strong data-order-option-title>ספר פיזי - איסוף עצמי מבנימינה</strong>.
+        בחרתם: <strong data-order-option-title>ספר מודפס - איסוף עצמי מבנימינה</strong>.
         מחיר הספר: <strong><span data-order-unit-price>60</span> ש"ח</strong>.
         <span data-order-delivery-text>איסוף עצמי מבנימינה ללא עלות משלוח.</span>
     </p>
 
-    <form class="preorder-form order-form" data-order-form data-thanks-url="/OrderThanks">
+    <form class="preorder-form order-form" data-order-form data-thanks-url="/order-thanks">
         <input type="hidden" name="bookType" value="physical" data-order-book-type />
         <input type="hidden" name="deliveryMethod" value="self-pickup" data-order-delivery-method />
         <input type="hidden" name="unitPrice" value="60" data-order-unit-price-input />
@@ -31,9 +31,9 @@
             <input class="form-control" name="email" type="email" autocomplete="email" maxlength="120" required />
         </label>
 
-        <label>
+        <label data-order-quantity-field>
             כמות
-            <input class="form-control" name="quantity" type="number" min="1" max="25" value="1" required />
+            <input class="form-control" name="quantity" type="number" min="1" max="25" value="1" required data-order-quantity-input />
         </label>
 
         <div class="order-shipping-fields full-width" data-order-shipping-fields>
@@ -60,8 +60,8 @@
 
         <div class="order-form-actions full-width">
             <a class="btn btn-secondary-outline" asp-page="/Order">חזרה לאפשרויות</a>
-            <button class="btn btn-accent" type="submit" data-order-submit>שליחת הזמנה</button>
             <p class="order-form-status" data-order-status role="status" aria-live="polite"></p>
+            <button class="btn btn-accent" type="submit" data-order-submit>שליחת הזמנה</button>
         </div>
     </form>
 </section>

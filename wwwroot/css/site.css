@@ -910,23 +910,89 @@ a {
 .order-form-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
+}
+
+.order-form-actions [data-order-submit] {
+  margin-inline-start: auto;
 }
 
 .order-form-status {
   margin: 0;
   color: var(--accent-dark);
   font-weight: 800;
+  flex: 1;
 }
 
 .order-payment-summary {
-  margin: 1rem 0 0;
-  padding: 1rem 1.25rem;
-  border-radius: 20px;
-  background: rgba(255, 248, 240, 0.72);
-  border: 1px solid rgba(31, 26, 23, 0.12);
+  margin: 1.35rem 0 0;
   font-weight: 800;
+}
+
+.order-payment-summary h2 {
+  margin: 0 0 0.55rem;
+  font-size: 1.45rem;
+}
+
+.order-payment-summary dl {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.order-payment-summary dl div {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.order-payment-summary dt,
+.order-payment-summary dd {
+  margin: 0;
+}
+
+.order-payment-summary dd {
+  color: var(--muted);
+}
+
+.order-reference-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 1rem 0 0;
+}
+
+.copy-order-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 26, 23, 0.16);
+  background: rgba(255, 248, 240, 0.82);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.copy-order-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(182, 90, 58, 0.42);
+  background: rgba(255, 248, 240, 0.96);
+}
+
+.copy-order-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.copy-order-button svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: currentColor;
 }
 
 .payment-instructions {
@@ -1126,6 +1192,49 @@ a {
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 20px 50px rgba(31, 26, 23, 0.16);
+}
+
+.pdf-end-page {
+  position: relative;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 620px;
+  min-height: min(72vh, 820px);
+  padding: clamp(2rem, 5vw, 4rem);
+  text-align: center;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.72), transparent 45%),
+    rgba(255, 250, 244, 0.96);
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(31, 26, 23, 0.16);
+}
+
+.pdf-end-page .btn {
+  position: relative;
+  z-index: 4;
+  justify-self: center;
+  min-width: 10rem;
+}
+
+.pdf-end-page[hidden] {
+  display: none;
+}
+
+.pdf-end-page h2 {
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  line-height: 1;
+}
+
+.pdf-end-page p {
+  max-width: 28rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: 1.7;
 }
 
 .pdf-page-slot {
