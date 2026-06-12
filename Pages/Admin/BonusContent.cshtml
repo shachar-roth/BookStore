@@ -7,7 +7,6 @@
 <section class="admin-shell">
     <div class="admin-toolbar">
         <div>
-            <span class="section-tag">ניהול</span>
             <h1>פרקים שאפשר לקרוא רק באתר</h1>
         </div>
         <div class="admin-actions">
@@ -24,7 +23,6 @@
 
     <section class="admin-grid">
         <section class="simple-page admin-editor">
-            <span class="section-tag">עריכה</span>
             <h2>@(Model.Editor.Id == Guid.Empty ? "קטע חדש" : "עריכת קטע")</h2>
 
             <form method="post" asp-page-handler="Save" class="admin-form" enctype="multipart/form-data">
@@ -67,8 +65,7 @@
         </section>
 
         <section class="simple-page admin-list">
-            <span class="section-tag">קטעים קיימים</span>
-            <h2>מה כבר מופיע במערכת</h2>
+            <h2>קטעים קיימים במערכת</h2>
 
             @foreach (var item in Model.Items)
             {
