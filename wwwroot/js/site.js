@@ -1,23 +1,3 @@
-const hero = document.querySelector("[data-video-hero]");
-const heroVideo = document.querySelector("[data-hero-video]");
-
-if (hero && heroVideo) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const [entry] = entries;
-
-      if (!entry.isIntersecting || entry.intersectionRatio < 0.6) {
-        heroVideo.pause();
-      }
-    },
-    {
-      threshold: [0, 0.6, 1]
-    }
-  );
-
-  observer.observe(hero);
-}
-
 const orderForm = document.querySelector("[data-order-form]");
 const orderDetails = document.querySelector("[data-order-details]");
 
